@@ -138,6 +138,7 @@ namespace Test {
                         infoJson[frame.ID] = ID3V2Util.GetStringFromBytes(frame);
                         if (frame.ID == "APIC") {
                             ID3V2Util.ExtractCoverImage(frame.Data, infoFileName);
+                            Console.WriteLine($"封面图输出至：{infoFileName}.(jpeg/png)");
                         }
                     }
                     catch {
@@ -147,6 +148,7 @@ namespace Test {
                 }
                 using (var writer = new StreamWriter(infoFileName + ".json")) {
                     writer.Write(JsonConvert.SerializeObject(infoJson, Formatting.Indented));
+                    Console.WriteLine($"JSON输出至：{infoFileName}.json");
                 }
             }
         }
