@@ -109,6 +109,7 @@ namespace Test {
 
             string outputFile = Path.Combine(Path.GetDirectoryName(mp3File) ?? "", $"[merged] {Path.GetFileName(mp3File)}");
             ID3V2Writer.Write(id3Data, info.MusicData, outputFile);
+            Console.WriteLine($"文件已输出至：{outputFile}");
         }
         private static void ExtractID3V2(string[] args) {
             if (args[0] == "*") {
