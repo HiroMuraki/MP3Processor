@@ -12,23 +12,28 @@ namespace Test {
                 return;
             }
 
-            switch (args[0].ToLower()) {
-                case "-h":
-                case "-help":
-                case "/?":
-                    ShowHelpInfo();
-                    break;
-                case "-extract":
-                case "-e":
-                    ExtractID3V2(args[1..]);
-                    break;
-                case "-merge":
-                case "-m":
-                    MergeID3V2(args[1..]);
-                    break;
-                default:
-                    ShowHelpInfo();
-                    break;
+            try {
+                switch (args[0].ToLower()) {
+                    case "-h":
+                    case "-help":
+                    case "/?":
+                        ShowHelpInfo();
+                        break;
+                    case "-extract":
+                    case "-e":
+                        ExtractID3V2(args[1..]);
+                        break;
+                    case "-merge":
+                    case "-m":
+                        MergeID3V2(args[1..]);
+                        break;
+                    default:
+                        ShowHelpInfo();
+                        break;
+                }
+            }
+            catch (Exception e) {
+                Console.WriteLine("ERROR: " + e.Message);
             }
         }
 
@@ -89,7 +94,7 @@ namespace Test {
                             id3Data.Frames.Add(frame);
                         }
                         catch (Exception e) {
-                            Console.WriteLine($"Error to read image，{e.Message}");
+                            Console.WriteLine($"Unable to read image，{e.Message}");
                         }
                         continue;
                     }
@@ -131,11 +136,11 @@ namespace Test {
                     try {
                         infoJson[frame.ID] = ID3V2Util.GetStringFromBytes(frame);
                         if (frame.ID == "APIC") {
-                            ID3V2Util.ExtractCoverImage(frame.Data, infoFileName + ".jpeg");
+                            ID3V2Util.ExtractCoverImage(frame.Data, infoFileName);
                         }
                     }
                     catch {
-                        Console.WriteLine($"Error：Unable to process {frame}");
+                        Console.WriteLine($"ERROR：Unable to process {frame}");
                     }
 
                 }
